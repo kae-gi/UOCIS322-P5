@@ -40,22 +40,30 @@ def index():
 def display():
     km_list=list(db.timestable.find())
     brevet_distance_km=list(db.brevet_distance.find().limit(1))
+    # checking: was data entered?
     if (len(km_list) > 0):
+        # response: yes, data was entered. display
         return flask.render_template('display.html',
 			     km_list=km_list,
                  brevet_distance_km=brevet_distance_km)
     else:
+        # response: no, data was ever entered
         return flask.render_template('nope.html')
 
 @app.route("/kmsubmit/", methods=["POST"])
 def submit():
+    # clear out dbs
     db.timestable.drop()
     db.brevet_distance.drop()
+    # get km_list for fields
     km_list = request.form.to_dict()
     km_dict = json.loads(km_list['km_list'])
     km_dict_length = len(km_dict)
+    # get the brevet distance field
     brevet_distance_km = json.loads(km_list['brevet_distance_km'])
+    # checking: is km_dict NOT empty?
     if (km_dict_length > 0):
+        # response: not empty, insert into db for brevet_distance and timestable
         brevet_document = {
             'distance': brevet_distance_km
         }
