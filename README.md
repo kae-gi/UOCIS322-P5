@@ -49,5 +49,7 @@ in hours. To convert into hours and minutes, subtract the whole number of hours 
 Michal Young, Ram Durairajan, Steven Walton, Joe Istas.
 
 The algorithm, described by RUSA: https://rusa.org/pages/acp-brevet-control-times-calculator
+
 The original calculator: https://rusa.org/octime_acp.html
+
 Additional background: https://rusa.org/pages/rulesForRiders
