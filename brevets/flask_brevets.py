@@ -50,35 +50,6 @@ def display():
         # response: no, data was ever entered
         return flask.render_template('nope.html')
 
-@app.route("/kmsubmit/", methods=["POST"])
-def submit():
-    # clear out dbs
-    db.timestable.drop()
-    db.brevet_distance.drop()
-    # get km_list for fields
-    km_list = request.form.to_dict()
-    km_dict = json.loads(km_list['km_list'])
-    km_dict_length = len(km_dict)
-    # get the brevet distance field
-    brevet_distance_km = json.loads(km_list['brevet_distance_km'])
-    # checking: is km_dict NOT empty?
-    if (km_dict_length > 0):
-        # response: not empty, insert into db for brevet_distance and timestable
-        brevet_document = {
-            'distance': brevet_distance_km
-        }
-        db.brevet_distance.insert_one(brevet_document)
-        for row in km_dict:
-            km_document = {
-                'miles': row['miles'],
-                'km': row['km'],
-                'location': row['location'],
-                'open': row['open'],
-                'close': row['close']
-            }
-            db.timestable.insert_one(km_document)
-    return flask.jsonify(output=str(request.form))
-
 @app.errorhandler(404)
 def page_not_found(error):
     app.logger.debug("Page not found")
@@ -115,6 +86,34 @@ def _calc_times():
     result = {"open": open_time, "close": close_time}
     return flask.jsonify(result=result)
 
+@app.route("/kmsubmit/", methods=["POST"])
+def submit():
+    # clear out dbs
+    db.timestable.drop()
+    db.brevet_distance.drop()
+    # get km_list for fields
+    km_list = request.form.to_dict()
+    km_dict = json.loads(km_list['km_list'])
+    km_dict_length = len(km_dict)
+    # get the brevet distance field
+    brevet_distance_km = json.loads(km_list['brevet_distance_km'])
+    # checking: is km_dict NOT empty?
+    if (km_dict_length > 0):
+        # response: not empty, insert into db for brevet_distance and timestable
+        brevet_document = {
+            'distance': brevet_distance_km
+        }
+        db.brevet_distance.insert_one(brevet_document)
+        for row in km_dict:
+            km_document = {
+                'miles': row['miles'],
+                'km': row['km'],
+                'location': row['location'],
+                'open': row['open'],
+                'close': row['close']
+            }
+            db.timestable.insert_one(km_document)
+    return flask.jsonify(output=str(request.form))
 
 #############
 
