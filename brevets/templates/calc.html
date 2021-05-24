@@ -204,7 +204,14 @@
                       });
                       var brevet_distance_km = $('#brevet_dist_km').val();
                       console.table(km_list); // see table in log
-                      alert("Submitted! Click Display to see results."); // feedback for submission
+                      // checking: if no values were entered at all
+                      if (km_list.length == 0){
+                        // response: no values, error message
+                        alert("Error, need values to submit!");
+                      } else{
+                        // response: yes values, submission message
+                        alert("Submitted! Click Display to see results.");
+                      }
                       // one post request, not many!
                       $.post("/kmsubmit/",
                       {
