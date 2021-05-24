@@ -20,6 +20,8 @@ in hours. To convert into hours and minutes, subtract the whole number of hours 
 - Added two buttons `Submit` and `Display` in the ACP calculator page.
 - Upon clicking the `Submit` button, the control times should be inserted into a MongoDB database.
 - Upon clicking the `Display` button, the entries from the database should be displayed in a new page.
+- Clicking `Submit` without entering values gives an error.
+- Clicking `Display` without entering values/clicking `Submit` will display a page with a message stating that you should enter in some values.
 - Constructed an automated "nose" test suite for the project using test cases created from using the website.
 	- one for the time calculator
 	- another for DB insertion and retrieval.
